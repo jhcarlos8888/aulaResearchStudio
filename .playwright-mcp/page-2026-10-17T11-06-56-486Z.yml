@@ -1,0 +1,348 @@
+- generic [ref=e3]:
+  - generic [ref=e5]:
+    - link "Saltar al contenido principal" [ref=e6] [cursor=pointer]:
+      - /url: "#mainContent"
+    - banner [ref=e7]:
+      - generic [ref=e8]:
+        - generic [ref=e10]:
+          - link "Microsoft" [ref=e12] [cursor=pointer]:
+            - /url: https://www.microsoft.com
+            - img "Microsoft" [ref=e13]
+          - link "Centro de evaluación" [ref=e15] [cursor=pointer]:
+            - /url: https://www.microsoft.com/es-es/evalcenter
+        - navigation "Menú contextual" [ref=e19]:
+          - generic [ref=e21]:
+            - generic [ref=e22]:
+              - button "Windows " [ref=e25] [cursor=pointer]:
+                - text: Windows
+                - generic [ref=e26]: 
+              - button "Windows Server " [ref=e30] [cursor=pointer]:
+                - text: Windows Server
+                - generic [ref=e31]: 
+              - button "SQL Server " [ref=e35] [cursor=pointer]:
+                - text: SQL Server
+                - generic [ref=e36]: 
+              - button "System Center " [ref=e40] [cursor=pointer]:
+                - text: System Center
+                - generic [ref=e41]: 
+              - button "Seguridad de Microsoft " [ref=e45] [cursor=pointer]:
+                - text: Seguridad de Microsoft
+                - generic [ref=e46]: 
+              - text: 
+            - button "Más " [ref=e50] [cursor=pointer]:
+              - text: Más
+              - generic [ref=e51]: 
+        - generic: 
+  - main [ref=e54]:
+    - generic [ref=e57]:
+      - generic [ref=e60]:
+        - heading "Selecciona tu descarga de Windows Server 2016." [level=1] [ref=e66]
+        - separator [ref=e68]
+        - generic [ref=e70]:
+          - generic [ref=e72]:
+            - list
+          - table [ref=e74]:
+            - caption [ref=e77]: Descarga de Windows Server 2016
+            - rowgroup [ref=e78]:
+              - row [ref=e79]:
+                - rowheader "Inglés (Estados Unidos)" [ref=e80]
+                - cell [ref=e81]:
+                  - generic [ref=e87]:
+                    - strong [ref=e89]: Descargas ISO
+                    - link "Descargar Windows Server 2016 ISO de 64 bits (en-US)" [ref=e91] [cursor=pointer]:
+                      - /url: https://go.microsoft.com/fwlink/p/?LinkID=2195174&clcid=0x409&culture=en-us&country=US
+                      - text: Edición de 64 bits 
+                - cell [ref=e92]:
+                  - generic [ref=e98]:
+                    - strong [ref=e100]: Prueba Azure
+                    - link "Prueba Windows Server en Azure" [ref=e102] [cursor=pointer]:
+                      - /url: https://go.microsoft.com/fwlink/p/?linkid=2195282&clcid=0x40A&culture=es-es&country=es
+                      - text: Más información 
+              - row [ref=e103]:
+                - rowheader "Chino (simplificado)" [ref=e104]
+                - cell [ref=e105]:
+                  - generic [ref=e111]:
+                    - strong [ref=e113]: Descargas ISO
+                    - link "Descargar Windows Server 2016 ISO de 64 bits (zh-CN)" [ref=e115] [cursor=pointer]:
+                      - /url: https://go.microsoft.com/fwlink/p/?LinkID=2195174&clcid=0x804&culture=zh-cn&country=CN
+                      - text: Edición de 64 bits 
+                - cell [ref=e116]
+              - row [ref=e117]:
+                - rowheader "Francés" [ref=e118]
+                - cell [ref=e119]:
+                  - generic [ref=e125]:
+                    - strong [ref=e127]: Descargas ISO
+                    - link "Descargar Windows Server 2016 ISO de 64 bits (fr-FR)" [ref=e129] [cursor=pointer]:
+                      - /url: https://go.microsoft.com/fwlink/p/?LinkID=2195174&clcid=0x40c&culture=fr-fr&country=FR
+                      - text: Edición de 64 bits 
+                - cell [ref=e130]
+              - row [ref=e131]:
+                - rowheader "Alemán" [ref=e132]
+                - cell [ref=e133]:
+                  - generic [ref=e139]:
+                    - strong [ref=e141]: Descargas ISO
+                    - link "Descargar Windows Server 2016 ISO de 64 bits (de-DE)" [ref=e143] [cursor=pointer]:
+                      - /url: https://go.microsoft.com/fwlink/p/?LinkID=2195174&clcid=0x407&culture=de-de&country=DE
+                      - text: Edición de 64 bits 
+                - cell [ref=e144]
+              - row [ref=e145]:
+                - rowheader "Italiano" [ref=e146]
+                - cell [ref=e147]:
+                  - generic [ref=e153]:
+                    - strong [ref=e155]: Descargas ISO
+                    - link "Descargar Windows Server 2016 ISO de 64 bits (it-IT)" [ref=e157] [cursor=pointer]:
+                      - /url: https://go.microsoft.com/fwlink/p/?LinkID=2195174&clcid=0x410&culture=it-it&country=IT
+                      - text: Edición de 64 bits 
+                - cell [ref=e158]
+              - row [ref=e159]:
+                - rowheader "Japonés" [ref=e160]
+                - cell [ref=e161]:
+                  - generic [ref=e167]:
+                    - strong [ref=e169]: Descargas ISO
+                    - link "Descargar Windows Server 2016 ISO de 64 bits (ja-JP)" [ref=e171] [cursor=pointer]:
+                      - /url: https://go.microsoft.com/fwlink/p/?LinkID=2195174&clcid=0x411&culture=ja-jp&country=JP
+                      - text: Edición de 64 bits 
+                - cell [ref=e172]
+              - row [ref=e173]:
+                - rowheader "Ruso" [ref=e174]
+                - cell [ref=e175]:
+                  - generic [ref=e181]:
+                    - strong [ref=e183]: Descargas ISO
+                    - link "Descargar Windows Server 2016 ISO de 64 bits (ru-RU)" [ref=e185] [cursor=pointer]:
+                      - /url: https://go.microsoft.com/fwlink/p/?LinkID=2195174&clcid=0x419&culture=ru-ru&country=RU
+                      - text: Edición de 64 bits 
+                - cell [ref=e186]
+              - row [ref=e187]:
+                - rowheader "Español" [ref=e188]
+                - cell [ref=e189]:
+                  - generic [ref=e195]:
+                    - strong [ref=e197]: Descargas ISO
+                    - link "Descargar Windows Server 2016 ISO de 64 bits (es-ES)" [ref=e199] [cursor=pointer]:
+                      - /url: https://go.microsoft.com/fwlink/p/?LinkID=2195174&clcid=0x40a&culture=es-es&country=ES
+                      - text: Edición de 64 bits 
+                - cell [ref=e200]
+      - generic [ref=e203]:
+        - heading "Requisitos previos" [level=2] [ref=e209]
+        - generic [ref=e211]:
+          - list [ref=e212]:
+            - listitem [ref=e213]:
+              - text: Revisa las
+              - link "notas de la versión" [ref=e214] [cursor=pointer]:
+                - /url: https://go.microsoft.com/fwlink/?linkid=2226147
+              - text: y los
+              - link "requisitos del sistema" [ref=e215] [cursor=pointer]:
+                - /url: https://go.microsoft.com/fwlink/?linkid=2226339
+              - text: de Windows Server 2016.
+            - listitem [ref=e216]: Regístrate, descarga e instala. Las ediciones de evaluación de Windows Server 2016 expiran en 180 días.
+            - listitem [ref=e217]: Recibe un correo electrónico con recursos que te guiarán a lo largo de la evaluación.
+          - heading "Directrices de instalación" [level=3] [ref=e218]
+          - paragraph [ref=e220]: Después de la instalación, instala el paquete de servicio más reciente.
+          - list [ref=e221]:
+            - listitem [ref=e222]:
+              - text: "Ve a:"
+              - link "Catálogo de actualización de Microsoft" [ref=e223] [cursor=pointer]:
+                - /url: https://go.microsoft.com/fwlink/?linkid=2226048
+              - text: y busca "Windows Server 2016".
+            - listitem [ref=e224]: Las versiones de Windows Server deben estar activas en internet en los primeros 10 días para evitar el cierre automático.
+          - paragraph [ref=e225]: La opción de implementación en la evaluación de Windows Server 2016 ISO se admite para implementaciones de máquina virtual de host e invitado hasta la versión de primavera 2018 de Windows Server. A partir de la versión de otoño de 2017, Nano Server se ha optimizado solo para uso de contenedor y Server Core está disponible para implementaciones de máquina virtual de host e invitado.
+          - paragraph [ref=e226]
+        - heading "Recursos" [level=2] [ref=e232]
+        - generic [ref=e234]:
+          - paragraph [ref=e235]:
+            - text: Recursos de producto |
+            - link "Documentación técnica de Windows Server" [ref=e236] [cursor=pointer]:
+              - /url: https://go.microsoft.com/fwlink/?linkid=2226340
+          - paragraph [ref=e237]:
+            - text: Comunidad |
+            - 'link "Microsoft Tech Community: Windows Server" [ref=e238] [cursor=pointer]':
+              - /url: https://go.microsoft.com/fwlink/?linkid=2225983
+          - paragraph [ref=e239]:
+            - text: Guías sobre cómo empezar |
+            - link "Introducción a Windows Server" [ref=e240] [cursor=pointer]:
+              - /url: https://go.microsoft.com/fwlink/?linkid=2226148
+          - paragraph [ref=e241]:
+            - text: Ruta de aprendizaje |
+            - link "Implementación, configuración y administración de Windows Server" [ref=e242] [cursor=pointer]:
+              - /url: https://go.microsoft.com/fwlink/?linkid=2226049
+  - contentinfo [ref=e245]:
+    - navigation "Footer Resource links" [ref=e247]:
+      - generic [ref=e248]:
+        - generic [ref=e249]:
+          - heading "Novedades" [level=2] [ref=e250]
+          - list [ref=e251]:
+            - listitem [ref=e252]:
+              - link "Surface Pro" [ref=e253] [cursor=pointer]:
+                - /url: https://www.microsoft.com/surface/devices/surface-pro
+            - listitem [ref=e254]:
+              - link "Surface Laptop" [ref=e255] [cursor=pointer]:
+                - /url: https://www.microsoft.com/surface/devices/surface-laptop
+            - listitem [ref=e256]:
+              - link "Explorar Copilot" [ref=e257] [cursor=pointer]:
+                - /url: https://www.microsoft.com/copilot?icid=DSM_Footer_WhatsNew_Copilot
+            - listitem [ref=e258]:
+              - link "Microsoft 365" [ref=e259] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/microsoft-365
+            - listitem [ref=e260]:
+              - link "Explora los productos de Microsoft" [ref=e261] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/microsoft-products-and-apps
+            - listitem [ref=e262]:
+              - link "Aplicaciones de Windows 11" [ref=e263] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/windows/apps-for-windows?icid=DSM_Footer_WhatsNew_Windows11apps
+        - generic [ref=e264]:
+          - heading "Microsoft Store" [level=2] [ref=e265]
+          - list [ref=e266]:
+            - listitem [ref=e267]:
+              - link "Perfil de la cuenta" [ref=e268] [cursor=pointer]:
+                - /url: https://account.microsoft.com/
+            - listitem [ref=e269]:
+              - link "Centro de descarga" [ref=e270] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/download
+            - listitem [ref=e271]:
+              - link "Soporte de Microsoft Store" [ref=e272] [cursor=pointer]:
+                - /url: https://go.microsoft.com/fwlink/?linkid=2139749
+            - listitem [ref=e273]:
+              - link "Devoluciones" [ref=e274] [cursor=pointer]:
+                - /url: https://support.microsoft.com/es-es/account-billing/81629012-aa4f-f48b-2394-8596f415072b?icid=DSM_Footer_MicrosoftStore_Returns
+            - listitem [ref=e275]:
+              - link "Seguimiento de pedidos" [ref=e276] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/store/b/order-tracking
+            - listitem [ref=e277]:
+              - link "Reciclar" [ref=e278] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/store/b/recycling?icid=GlobalFooterNav
+            - listitem [ref=e279]:
+              - link "Garantías comerciales" [ref=e280] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/store/b/aboutwarranties?icid=GlobalFooterNav
+        - generic [ref=e281]:
+          - heading "Educación" [level=2] [ref=e282]
+          - list [ref=e283]:
+            - listitem [ref=e284]:
+              - link "Microsoft Educación" [ref=e285] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/education
+            - listitem [ref=e286]:
+              - link "Dispositivos para educación" [ref=e287] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/education/devices/overview
+            - listitem [ref=e288]:
+              - link "Microsoft Teams para Educación" [ref=e289] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/education/products/teams
+            - listitem [ref=e290]:
+              - link "Microsoft 365 Educación" [ref=e291] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/education/products/microsoft-365
+            - listitem [ref=e292]:
+              - link "Office Educación" [ref=e293] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/education/products/office
+            - listitem [ref=e294]:
+              - link "Formación y desarrollo de educadores" [ref=e295] [cursor=pointer]:
+                - /url: https://education.microsoft.com/
+            - listitem [ref=e296]:
+              - link "Ofertas para estudiantes y padres" [ref=e297] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/store/b/student
+            - listitem [ref=e298]:
+              - link "Azure para estudiantes" [ref=e299] [cursor=pointer]:
+                - /url: https://azure.microsoft.com/es-es/free/students/
+      - generic [ref=e300]:
+        - generic [ref=e301]:
+          - heading "Empresas" [level=2] [ref=e302]
+          - list [ref=e303]:
+            - listitem [ref=e304]:
+              - link "Microsoft AI" [ref=e305] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/ai?icid=DSM_Footer_AI
+            - listitem [ref=e306]:
+              - link "Seguridad de Microsoft" [ref=e307] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/security
+            - listitem [ref=e308]:
+              - link "Azure" [ref=e309] [cursor=pointer]:
+                - /url: https://azure.microsoft.com/es-es/
+            - listitem [ref=e310]:
+              - link "Dynamics 365" [ref=e311] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/dynamics-365
+            - listitem [ref=e312]:
+              - link "Microsoft 365" [ref=e313] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/microsoft-365/business/
+            - listitem [ref=e314]:
+              - link "Microsoft Copilot" [ref=e315] [cursor=pointer]:
+                - /url: https://www.microsoft.com/copilot?icid=DSM_Footer_Business_Copilot
+            - listitem [ref=e316]:
+              - link "Microsoft Teams" [ref=e317] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/microsoft-teams/group-chat-software
+            - listitem [ref=e318]:
+              - link "Pequeñas empresas" [ref=e319] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/store/b/business
+        - generic [ref=e320]:
+          - heading "Desarrolladores y TI" [level=2] [ref=e321]
+          - list [ref=e322]:
+            - listitem [ref=e323]:
+              - link "Desarrollador de Microsoft" [ref=e324] [cursor=pointer]:
+                - /url: https://developer.microsoft.com/es-es/
+            - listitem [ref=e325]:
+              - link "Microsoft Learn" [ref=e326] [cursor=pointer]:
+                - /url: https://learn.microsoft.com/
+            - listitem [ref=e327]:
+              - link "Soporte técnico para aplicaciones del marketplace de IA" [ref=e328] [cursor=pointer]:
+                - /url: https://www.microsoft.com/software-development-companies/offers-benefits/isv-success?icid=DSM_Footer_SupportAIMarketplace&ocid=cmm3atxvn98
+            - listitem [ref=e329]:
+              - link "Microsoft Tech Community" [ref=e330] [cursor=pointer]:
+                - /url: https://techcommunity.microsoft.com/
+            - listitem [ref=e331]:
+              - link "Microsoft Marketplace" [ref=e332] [cursor=pointer]:
+                - /url: https://marketplace.microsoft.com?icid=DSM_Footer_Marketplace&ocid=cmm3atxvn98
+            - listitem [ref=e333]:
+              - link "Microsoft Power Platform" [ref=e334] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/power-platform
+            - listitem [ref=e335]:
+              - link "Empresas de software" [ref=e336] [cursor=pointer]:
+                - /url: https://www.microsoft.com/software-development-companies?icid=DSM_Footer_SoftwareCompanies&ocid=cmm3atxvn98
+            - listitem [ref=e337]:
+              - link "Visual Studio" [ref=e338] [cursor=pointer]:
+                - /url: https://visualstudio.microsoft.com/
+        - generic [ref=e339]:
+          - heading "Compañía" [level=2] [ref=e340]
+          - list [ref=e341]:
+            - listitem [ref=e342]:
+              - link "Oportunidades de empleo" [ref=e343] [cursor=pointer]:
+                - /url: https://careers.microsoft.com/
+            - listitem [ref=e344]:
+              - link "Acerca de Microsoft" [ref=e345] [cursor=pointer]:
+                - /url: https://www.microsoft.com/about
+            - listitem [ref=e346]:
+              - link "Noticias de la compañía" [ref=e347] [cursor=pointer]:
+                - /url: https://news.microsoft.com/source/emea/region/spain/?lang=es&icid=DSM_Footer_Company_CompanyNews
+            - listitem [ref=e348]:
+              - link "Privacidad en Microsoft" [ref=e349] [cursor=pointer]:
+                - /url: https://www.microsoft.com/es-es/privacy?icid=DSM_Footer_Company_Privacy
+            - listitem [ref=e350]:
+              - link "Inversores" [ref=e351] [cursor=pointer]:
+                - /url: https://www.microsoft.com/investor/default.aspx
+    - generic [ref=e352]:
+      - generic [ref=e353]:
+        - generic [ref=e354]:
+          - generic [ref=e355]: 
+          - link "Selector de idiomas del contenido. Actualmente definido en Español (España)" [ref=e357] [cursor=pointer]:
+            - /url: https://www.microsoft.com/es-es/evalcenter/locales
+            - text: Español (España)
+        - link "Icono de exclusión de opciones de privacidad Tus opciones de privacidad" [ref=e359] [cursor=pointer]:
+          - /url: https://aka.ms/yourcaliforniaprivacychoices
+          - img "Icono de exclusión de opciones de privacidad" [ref=e360]
+          - generic [ref=e365]: Tus opciones de privacidad
+        - link "Privacidad de la salud del consumidor" [ref=e366] [cursor=pointer]:
+          - /url: https://go.microsoft.com/fwlink/?linkid=2259814
+      - navigation "Vínculos corporativos de Microsoft" [ref=e368]:
+        - list [ref=e369]:
+          - listitem [ref=e370]:
+            - link "Ponte en contacto con Microsoft" [ref=e371] [cursor=pointer]:
+              - /url: https://support.microsoft.com/contactus
+          - listitem [ref=e372]:
+            - link "Privacidad" [ref=e373] [cursor=pointer]:
+              - /url: https://go.microsoft.com/fwlink/?LinkId=521839
+          - listitem [ref=e374]:
+            - link "Condiciones de uso" [ref=e375] [cursor=pointer]:
+              - /url: https://go.microsoft.com/fwlink/?LinkID=206977
+          - listitem [ref=e376]:
+            - link "Marcas registradas" [ref=e377] [cursor=pointer]:
+              - /url: https://go.microsoft.com/fwlink/?linkid=2196228
+          - listitem [ref=e378]:
+            - link "Sobre nuestra publicidad" [ref=e379] [cursor=pointer]:
+              - /url: https://choice.microsoft.com/
+          - listitem [ref=e380]:
+            - link "Docs de cumplimiento de la UE" [ref=e381] [cursor=pointer]:
+              - /url: https://www.microsoft.com/en-ie/eucompliancedoc/default.aspx
+          - listitem [ref=e382]: © Microsoft 2026

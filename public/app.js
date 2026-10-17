@@ -39,6 +39,7 @@ function showView(view) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (view === 'settings') fillEditForm();
   if (view === 'opencode') refreshEnvironmentStatus();
+  if (view === 'draft') loadPendientes();
 }
 
 function setActiveProject(project) {
@@ -421,7 +422,12 @@ $('#edit-project-form').addEventListener('submit', async (event) => {
 $('#source-file').addEventListener('change', () => {
   const file = $('#source-file').files?.[0];
   $('#selected-file-name').textContent = file ? `${file.name} · ${formatBytes(file.size)}` : 'No se ha seleccionado ningún archivo';
-  if (file && !$('#source-title').value) $('#source-title').value = file.name.replace(/\.[^.]+$/, '').replace(/[_-]/g, ' ');
+  const titleInput = $('#source-title');
+  // Autocompleta con el nombre del archivo; solo conserva el valor si el usuario lo editó a mano.
+  if (file && (!titleInput.value || titleInput.value === state.lastAutoSourceTitle)) {
+    state.lastAutoSourceTitle = file.name.replace(/\.[^.]+$/, '').replace(/[_-]/g, ' ');
+    titleInput.value = state.lastAutoSourceTitle;
+  }
 });
 
 const uploadZone = $('#upload-zone');
@@ -448,6 +454,7 @@ $('#source-form').addEventListener('submit', async (event) => {
     const result = await api(`/api/projects/${state.activeProject.id}/references`, { method: 'POST', body: formData });
     state.activeProject = result.project;
     form.reset();
+    state.lastAutoSourceTitle = '';
     $('#selected-file-name').textContent = 'No se ha seleccionado ningún archivo';
     renderProjectDependentViews();
     await loadProjects();
@@ -518,6 +525,62 @@ $('#revision-form').addEventListener('submit', async (event) => {
 });
 
 $('#refresh-status').addEventListener('click', refreshEnvironmentStatus);
+
+// --- Pendientes y preguntas abiertas (leídos de PENDIENTES_DE_VERIFICACION.md) ---
+let pendientesItems = [];
+
+async function loadPendientes() {
+  const list = $('#pendientes-list');
+  if (!list) return;
+  if (!state.activeProject) {
+    pendientesItems = [];
+    list.innerHTML = '<p class="pendientes-empty">Elige un proyecto para ver sus pendientes.</p>';
+    $('#pendientes-count').textContent = '';
+    return;
+  }
+  list.innerHTML = '<p class="pendientes-empty">Cargando…</p>';
+  try {
+    const result = await api(`/api/projects/${state.activeProject.id}/pendientes`);
+    pendientesItems = Array.isArray(result.items) ? result.items : [];
+    renderPendientes();
+  } catch (error) {
+    list.innerHTML = `<p class="pendientes-empty">No se pudieron leer los pendientes: ${escapeHtml(error.message)}</p>`;
+  }
+}
+
+function renderPendientes() {
+  const list = $('#pendientes-list');
+  const openCount = pendientesItems.filter((item) => item.open).length;
+  $('#pendientes-count').textContent = pendientesItems.length ? `${openCount} abiertos de ${pendientesItems.length}` : '';
+  if (!pendientesItems.length) {
+    list.innerHTML = '<p class="pendientes-empty">Sin pendientes registrados. Los agentes crean este archivo durante la revisión; también puedes añadirlos a mano en PENDIENTES_DE_VERIFICACION.md.</p>';
+    return;
+  }
+  list.innerHTML = pendientesItems.map((item) => `
+    <div class="pendiente-item${item.open ? '' : ' closed'}">
+      <span class="pendiente-chip ${item.open ? 'open' : 'done'}">${item.open ? 'Abierto' : 'Cerrado'}</span>
+      <div class="pendiente-body">
+        <strong>${escapeHtml(item.element)}</strong>
+        ${item.why ? `<p><b>Por qué:</b> ${escapeHtml(item.why)}</p>` : ''}
+        ${item.how ? `<p><b>Cómo verificar:</b> ${escapeHtml(item.how)}</p>` : ''}
+        ${item.status ? `<p class="pendiente-status">${escapeHtml(item.status)}</p>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+$('#pendientes-refresh').addEventListener('click', loadPendientes);
+
+$('#pendientes-to-revision').addEventListener('click', () => {
+  const open = pendientesItems.filter((item) => item.open);
+  if (!open.length) { toast('No hay pendientes abiertos que añadir.'); return; }
+  const lines = open.map((item) => `- ${item.element}`).join('\n');
+  const textarea = $('#revision-instruction');
+  const base = textarea.value.trim();
+  const header = 'Revisa y actualiza los pendientes abiertos de PENDIENTES_DE_VERIFICACION.md antes de la entrega:';
+  textarea.value = (base ? `${base}\n\n` : '') + `${header}\n${lines}\n\n`;
+  toast('Pendientes abiertos añadidos a la solicitud de correcciones.');
+  textarea.focus();
+});
 
 // Keyboard support for project cards.
 document.addEventListener('keydown', async (event) => {

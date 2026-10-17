@@ -791,6 +791,29 @@ app.post('/api/projects/:id/revision', requireProject, async (req, res) => {
   res.json({ ok: true, file: `workspace/projects/${req.project.id}/SOLICITUD_REVISION.md`, task });
 });
 
+// Devuelve los pendientes del proyecto parseados desde PENDIENTES_DE_VERIFICACION.md
+// para mostrarlos en la vista "Borrador y exportación" junto a la solicitud de correcciones.
+app.get('/api/projects/:id/pendientes', requireProject, async (req, res) => {
+  const filePath = path.join(projectDir(req.project.id), 'PENDIENTES_DE_VERIFICACION.md');
+  let raw;
+  try { raw = await fs.readFile(filePath, 'utf8'); } catch { return res.json({ items: [], file: null }); }
+  const clean = (cell) => cell
+    .replace(/\*\*/g, '').replace(/`/g, '').replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/\s+/g, ' ').trim();
+  const items = [];
+  for (const line of raw.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed.startsWith('|') || !trimmed.endsWith('|')) continue;
+    const cells = trimmed.slice(1, -1).split('|').map(clean);
+    if (cells.length < 4) continue;
+    if (/^elemento$/i.test(cells[0])) continue; // encabezado
+    if (cells.every((cell) => /^:?-{3,}:?$/.test(cell))) continue; // separador
+    if (!cells[0]) continue;
+    items.push({ element: cells[0], why: cells[1], how: cells[2], status: cells[3], open: !/^cerrad/i.test(cells[3]) });
+  }
+  res.json({ items, file: `workspace/projects/${req.project.id}/PENDIENTES_DE_VERIFICACION.md` });
+});
+
 app.post('/api/projects/:id/export', requireProject, async (req, res) => {
   const project = req.project;
   const input = String(req.body?.draftText ?? project.draftText ?? '').replace(/\u0000/g, '').trim();
