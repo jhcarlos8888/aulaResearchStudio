@@ -1,0 +1,20 @@
+{
+  "name": "aula-research-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Espacio local para planificar, documentar, revisar y exportar trabajos académicos con OpenCode y agentes MCP.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "check": "node --check server.js && node --check lib/docx-export.js && node --check lib/docx-text.js && node --check public/app.js",
+    "smoke": "bash scripts/smoke-test.sh"
+  },
+  "engines": { "node": ">=20.0.0" },
+  "dependencies": {
+    "docx": "^9.12.0",
+    "express": "^5.1.0",
+    "multer": "^2.0.2",
+    "pdf-parse": "^1.1.1"
+  }
+}

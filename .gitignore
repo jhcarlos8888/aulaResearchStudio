@@ -1,0 +1,11 @@
+node_modules/
+.env
+.DS_Store
+*.log
+data/projects.json.bak
+workspace/exports/*
+!workspace/exports/.gitkeep
+workspace/projects/*
+!workspace/projects/.gitkeep
+workspace/references/*
+!workspace/references/.gitkeep
