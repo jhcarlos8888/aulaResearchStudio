@@ -35,7 +35,8 @@ Añade las URLs y fechas de consulta cuando sean relevantes. Mantén el vínculo
 
 ## Herramientas
 - `grep` con corchetes o paréntesis en el patrón (`![](`) no es literal: usa `grep -F`. Un resultado `0` sospechoso casi siempre es el patrón, no el archivo.
-- No uses `pkill -f` con un patrón que aparezca en tu propia línea de comando: te matarás a ti mismo y perderás la salida del comando.
+- No uses `pkill -f` con un patrón que aparezca en tu propia línea de comando: te matarás a ti mismo y perderás la salida del comando. Guarda el PID al arrancar (`echo $! > archivo.pid`) y mata por PID (`kill "$(cat archivo.pid)"`). Si necesitas matar por patrón, usa `pkill -F` con un fichero de patrones o excluye tu propia sesión con `pgrep -f patron | grep -v $$`.
+- Un servidor temporal que **no** lleve `AULA_DATA_DIR`/`AULA_WORKSPACE_DIR` en el entorno está escribiendo en los datos reales del usuario. Comprueba `/proc/<pid>/environ` antes de dar por aislado un proceso, y no mates nunca un proceso que no puedas atribuir a tu propia prueba.
 - **La extensión no es el formato.** Si necesitas saber qué es un fichero, mira su firma binaria (`file`, o lee los primeros bytes). Un `.png` puede ser basura y un `.webp` o `.svg` no los admite Word.
 - `sed 's/[^0-9 ]//g'` deja un **espacio inicial** que rompe la aritmética de shell (`$(( ))` devuelve 0 sin error). Extrae números con `awk -F'"'` o `read` en vez de calcular en bash sobre texto limpiado.
 - Un generador de datos de prueba escrito por ti puede tener bugs que hagan fallar la prueba sin que el producto esté roto. Valida el fixture (por ejemplo, `file figura.png` y sus dimensiones) antes de interpretar el resultado.

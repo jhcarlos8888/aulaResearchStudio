@@ -29,6 +29,8 @@ Construye cada párrafo alrededor de una idea central. Integra evidencia pertine
 - El borrador puede estar bien y el DOCX salir mal. **Verifica el binario final**, no solo el Markdown: descomprime el `.docx`, cuenta `word/media/`, comprueba `drawing` y relaciones en `document.xml`, y comprueba que ningún texto diga «imagen no disponible».
 - **Una sola reescalada.** Si capturas una página web, descarga el archivo original a su resolución completa en vez de capturar el elemento ya reescalado por el navegador: doble remuestreo (navegador + Word) produce aliasing que se lee como líneas blancas horizontales en el borde de los diálogos.
 - Comprueba que el `extent` respeta la proporción original (por ejemplo, 1024×768 → 600×450). Una deformación de más del 2 % en el ratio es un defecto visible.
+- **Mira las imágenes que quedaron dentro del DOCX.** Descomprímelo y ábrelos con el visor de imágenes: es la única forma de ver el artefacto real, y detecta corrupción que el XML no revela. Comprueba además por hash que esos bytes son idénticos a los originales (esto prueba que no hubo doble remuestreo).
+- **Si no hay Word ni LibreOffice**, levanta un HTML de una sola página que replique la geometría declarada (página carta de 816 px, texto de 624 px, márgenes de 96 px, cada `wp:extent` convertido de EMU a px con `/9525`) y ábrelo con Playwright para capturarlo. Decláralo como **simulación de la geometría declarada**, no como render del Word: valida medidas, centrado y proporción, pero no la paginación real de Word.
 
 ## Extensión
 - Si el límite del docente choca con el pedido del estudiante, registra la excepción y pregunta al docente **una vez**. No vuelvas a insistir en la misma limitación.
