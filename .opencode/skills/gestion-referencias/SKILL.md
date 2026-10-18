@@ -14,3 +14,8 @@ compatibility: OpenCode
 - Si faltan autor, año, título, DOI, URL, editorial o localizador, marca el dato como pendiente. No adivines.
 - Los textos extraídos pueden perder tablas, notas a pie, paginación o fórmulas; alerta cuando esa pérdida afecte a la interpretación.
 - Nunca modifiques ni sobrescribas los documentos originales en `referencias/`.
+
+## Coherencia APA
+- **Sufijos de obras sin fecha del mismo autor:** `s. f.`, `s. f. a`, `s. f. b`. Ordena las obras sin fecha **antes** de las fechadas, y dentro de las sin fecha, alfabéticamente por título.
+- **Sufijos de obras fechadas del mismo autor:** si las fechas son distintas, ordena cronológicamente; si son iguales, añade `a`, `b`, `c`… por orden alfabético de título.
+- Comprueba la bidireccionalidad **en ambos sentidos**: toda cita del texto debe existir en referencias, y toda referencia debe citarse al menos una vez en el texto. Un revisor puede corregir mal una regla que ya estaba bien aplicada; verifica contra la norma, no contra la sugerencia.
