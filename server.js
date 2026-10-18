@@ -828,6 +828,8 @@ app.post('/api/projects/:id/export', requireProject, async (req, res) => {
       project,
       draftText,
       includeSources: Boolean(req.body?.includeSources),
+      // Base para resolver rutas relativas de imágenes (![](imagenes/x.png)).
+      projectDir: path.join(PROJECT_WORK_DIR, project.id),
       outputPath: output
     });
   } catch (error) {
