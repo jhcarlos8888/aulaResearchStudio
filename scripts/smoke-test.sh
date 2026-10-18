@@ -174,6 +174,69 @@ if [[ "$DUPLICADO" == "0" ]]; then check "no se duplica la lista preliminar si e
 ESTADO="$(curl -s --max-time 10 "$BASE/api/projects/$ID" | python3 -c 'import sys,json;print(json.load(sys.stdin).get("status",""))' 2>/dev/null)"
 if [[ "$ESTADO" == "Exportado a Word" ]]; then check "el estado pasa a 'Exportado a Word' tras exportar" 0; else check "el estado pasa a 'Exportado a Word' tras exportar" 1; fi
 
+echo "== Exportar Word con imágenes: formato, escala y avisos =="
+# Un PNG válido de 1024x768 y cuatro ficheros que deben quedar como aviso
+# visible: inexistente, formato no admitido (svg/webp) y binario corrupto con
+# extensión de png. Ninguno debe romper la exportación del documento entero.
+python3 - "$SMOKE_WORKSPACE/projects/$ID/imagenes" <<'PY'
+import os, struct, sys, zlib
+out = sys.argv[1]; os.makedirs(out, exist_ok=True)
+
+def png(path, w, h):
+    rows = []
+    for y in range(h):
+        row = bytearray()
+        for x in range(w):
+            row += bytes([x * 255 // w, y * 255 // h, 128])
+        rows.append(b'\x00' + bytes(row))
+    raw = b''.join(rows)
+    def chunk(t, d):
+        c = struct.pack('>I', zlib.crc32(t + d) & 0xffffffff)
+        return struct.pack('>I', len(d)) + t + d + c
+    with open(path, 'wb') as f:
+        f.write(b'\x89PNG\r\n\x1a\n' + chunk(b'IHDR', struct.pack('>IIBBBBB', w, h, 8, 2, 0, 0, 0))
+                + chunk(b'IDAT', zlib.compress(raw)) + chunk(b'IEND', b''))
+
+png(os.path.join(out, 'figura.png'), 1024, 768)
+open(os.path.join(out, 'falta.svg'), 'w').write('<svg xmlns="http://www.w3.org/2000/svg"/>')
+open(os.path.join(out, 'basura.png'), 'wb').write(os.urandom(300))
+PY
+DOCXI="$(curl -s --max-time 30 -X POST "$BASE/api/projects/$ID/export" -H 'Content-Type: application/json' \
+  -d '{"draftText":"# Ti\n\nFigura.\n\n![Figura 1. Diagrama](imagenes/figura.png)\n\nFaltante.\n\n![Figura 2. Ausente](imagenes/no_existe.png)\n\nSVG.\n\n![Figura 3. Vectorial](imagenes/falta.svg)\n\nCorrupta.\n\n![Figura 4. Rota](imagenes/basura.png)\n"}' \
+  | python3 -c 'import sys,json;print(json.load(sys.stdin).get("filename",""))' 2>/dev/null)"
+XMLI="$(unzip -p "$SMOKE_WORKSPACE/exports/$DOCXI" word/document.xml 2>/dev/null)"
+MEDIA="$(unzip -l "$SMOKE_WORKSPACE/exports/$DOCXI" 2>/dev/null | grep -c 'word/media/.*\.' || true)"
+if [[ "$MEDIA" == "1" ]]; then check "la imagen valida se incrusta una sola vez (media: ${MEDIA:-0})" 0; else check "la imagen valida se incrusta una sola vez (media: ${MEDIA:-0}, esperado 1)" 1; fi
+read -r PX_W PX_H < <(unzip -p "$SMOKE_WORKSPACE/exports/$DOCXI" word/document.xml 2>/dev/null \
+  | grep -o 'wp:extent cx="[0-9]*" cy="[0-9]*"' | head -1 \
+  | awk -F'"' '{ printf "%d %d\n", $2/9525, $4/9525 }')
+# 1024x768 con tope 600 px de ancho: 600x450 exactos, sin deformar.
+if [[ "$PX_W" == "600" && "$PX_H" == "450" ]]; then
+  check "la imagen se escala sin deformar (extent ${PX_W}x${PX_H} px, ratio 1,333)" 0
+else
+  check "la imagen se escala sin deformar (extent ${PX_W:-0}x${PX_H:-0} px, esperado 600x450)" 1
+fi
+RELIS="$(unzip -p "$SMOKE_WORKSPACE/exports/$DOCXI" word/_rels/document.xml.rels 2>/dev/null | grep -c 'relationships/image' || true)"
+if [[ "$RELIS" == "1" ]]; then check "hay exactamente una relación de imagen (rIds: ${RELIS})" 0; else check "hay exactamente una relación de imagen (rIds: ${RELIS:-0})" 1; fi
+AVISOS="$(echo "$XMLI" | grep -o '\[Imagen no disponible\|\[Formato de imagen no admitido' | wc -l | tr -d ' ')"
+if [[ "$AVISOS" == "3" ]]; then check "las 3 imágenes problemáticas quedan como aviso visible (avisos: $AVISOS)" 0; else check "las 3 imágenes problemáticas quedan como aviso visible (avisos: ${AVISOS:-0}, esperado 3)" 1; fi
+if echo "$XMLI" | grep -q 'Imagen no disponible'; then
+  check "el aviso de fichero inexistente es visible en el documento" 0
+else
+  check "el aviso de fichero inexistente es visible en el documento" 1
+fi
+# Regresión: un .svg hacía fallar la exportación entera con HTTP 500.
+if [[ -n "$DOCXI" && "$DOCXI" == *.docx ]]; then
+  check "una imagen en formato no admitido no tumba la exportacion (sin HTTP 500)" 0
+else
+  check "una imagen en formato no admitido no tumba la exportacion (sin HTTP 500)" 1
+fi
+if echo "$XMLI" | grep -q 'Imagen no disponible:.*figura.png'; then
+  check "la imagen valida NO genera ningun aviso (falso positivo)" 1
+else
+  check "la imagen valida NO genera ningun aviso (falso positivo)" 0
+fi
+
 echo "== Subir un .docx como referencia y extraer su texto =="
 DOCX_REF="$(curl -s --max-time 30 -X POST "$BASE/api/projects/$ID/references" \
   -F "file=@$SMOKE_WORKSPACE/exports/$DOCX_NAME" -F "title=Documento exportado" \
