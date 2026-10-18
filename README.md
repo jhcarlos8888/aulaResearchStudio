@@ -12,7 +12,7 @@ Aplicación local en español para planificar trabajos escritos, organizar refer
 - **Seis agentes**: coordinación, investigación de fuentes, redacción académica, auditoría de referencias, revisión de APA y edición crítica.
 - **Siete skills reutilizables** para planificación, investigación, escritura, APA, gestión de referencias, revisión crítica e integridad académica.
 - **Borrador editable**: guarda texto, importa un `BORRADOR.md` generado por OpenCode y prepara instrucciones de corrección sucesivas.
-- **Exportación Word** con portada que utiliza los datos institucionales, Times New Roman 12, interlineado doble y márgenes de 2,54 cm como base. Se pueden adjuntar al final entradas preliminares construidas con los metadatos de las fuentes cargadas.
+- **Exportación Word** con portada que utiliza los datos institucionales, Times New Roman 12, interlineado doble y márgenes de 2,54 cm como base. Incrusta las figuras citadas en el borrador (`![](imagenes/figura.png)`), escaladas sin deformar y nunca por encima de su resolución original. Se pueden adjuntar al final entradas preliminares construidas con los metadatos de las fuentes cargadas.
 - **Configuración de Playwright MCP** para que OpenCode pueda operar un navegador al investigar en sitios web.
 
 ## Requisitos
@@ -144,7 +144,7 @@ npm run check   # sintaxis de JavaScript
 npm run smoke   # batería de humo: arranca el servidor y prueba el flujo real
 ```
 
-La batería de humo (`scripts/smoke-test.sh`) arranca un servidor temporal en el puerto 4399 con **un directorio de datos propio y aislado**: crea un proyecto de prueba, comprueba las plantillas iniciales y la conservación de `FUENTES.md`, sube referencias en paralelo, guarda un borrador gigante, exporta a Word (sangría francesa y encabezados APA), sube un `.docx` y extrae su texto, comprueba la protección contra `data/projects.json` corrupto y elimina el proyecto. **No toca tus proyectos reales** (aunque la aplicación esté abierta) y borra sus datos al terminar. Requiere `node`, `python3`, `unzip` y `curl`. `npm run check` solo revisa sintaxis; no sustituye la revisión manual del Word ni de la guía institucional.
+La batería de humo (`scripts/smoke-test.sh`) arranca un servidor temporal en el puerto 4399 con **un directorio de datos propio y aislado**: crea un proyecto de prueba, comprueba las plantillas iniciales y la conservación de `FUENTES.md`, sube referencias en paralelo, guarda un borrador gigante, exporta a Word (sangría francesa y encabezados APA), comprueba la **exportación de figuras** (una imagen válida incrustada una sola vez y sin deformar; un formato no admitido, un fichero corrupto y uno inexistente quedan como aviso visible sin tumbar la exportación), sube un `.docx` y extrae su texto, comprueba la protección contra `data/projects.json` corrupto y elimina el proyecto. **No toca tus proyectos reales** (aunque la aplicación esté abierta) y borra sus datos al terminar. Requiere `node`, `python3`, `unzip` y `curl`. `npm run check` solo revisa sintaxis; no sustituye la revisión manual del Word ni de la guía institucional.
 
 ## Referencias oficiales de la integración
 

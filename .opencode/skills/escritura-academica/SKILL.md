@@ -22,6 +22,8 @@ Construye cada párrafo alrededor de una idea central. Integra evidencia pertine
 - Escribe el pie **después de haber mirado la imagen**, y que el pie diga solo lo que se ve en ella. No describas la pantalla que supones que muestra.
 - Cada figura lleva pie con: número, título descriptivo, fuente con URL y fecha de consulta. Si la figura no es del autor, dilo en el pie y en la nota metodológica.
 - Si la fuente oficial **no tiene** imágenes de lo que hay que ilustrar, declara la limitación en vez de buscar por las ramas. Eso es un hallazgo, no un fallo.
+- Entrega las figuras en un formato que Word admita (**png, jpeg, gif o bmp**). Un `svg` o un `webp` no se incrustan: conviértelos a png antes de citarlos, y si no es posible, decláralo como limitación en el texto.
+- Antes de dar una figura por buena, **ábrela**. Comprueba la firma binaria y las dimensiones reales: un fichero llamado `.png` puede no ser un png, y esa imagen rota sería la que se entrega al docente.
 
 ## Salida a Word
 - El borrador puede estar bien y el DOCX salir mal. **Verifica el binario final**, no solo el Markdown: descomprime el `.docx`, cuenta `word/media/`, comprueba `drawing` y relaciones en `document.xml`, y comprueba que ningún texto diga «imagen no disponible».

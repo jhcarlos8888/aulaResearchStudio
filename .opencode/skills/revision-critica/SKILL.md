@@ -20,3 +20,9 @@ Evalúa el documento contra el encargo y no solo por su fluidez superficial.
 
 ## Salida requerida
 Escribe `INFORME_REVISION.md` con prioridad (crítica/alta/media/menor), ubicación, hallazgo, por qué importa, cambio sugerido y si necesita decisión humana. No modifiques una cita en silencio si la corrección depende de datos bibliográficos desconocidos. Distingue errores verificables de recomendaciones de estilo.
+
+## Integridad de la propia verificación
+- **Una comprobación que nunca falla no comprueba nada.** Cuando añadas una prueba o un chequeo nuevo, pásalo contra el código o el documento **anterior al arreglo**: debe fallar. Si también pasa con el defecto presente, la prueba es decorativa y no protege de regresiones.
+- **Si una prueba nueva falla, sospecha primero del propio test.** Comprueba que los datos de prueba son válidos (un fichero de imagen generado mal no prueba nada del programa). Depura el artilugio antes de concluir que el producto está roto.
+- **Verifica el artefacto, no el mensaje.** «La exportación devolvió ok» no dice que la figura esté dentro. Descomprime el `.docx`, cuenta `word/media/`, comprueba relaciones, dimensiones y que no haya avisos de fallo incrustados.
+- **No confundas ausencia de prueba con prueba de ausencia.** Un grep que devuelve 0 casi siempre es un patrón mal escrito; comprueba la herramienta antes de concluir que el contenido no existe.
