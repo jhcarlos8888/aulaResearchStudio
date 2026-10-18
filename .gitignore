@@ -9,3 +9,6 @@ workspace/projects/*
 !workspace/projects/.gitkeep
 workspace/references/*
 !workspace/references/.gitkeep
+
+# Capturas de Playwright usadas solo para depuración (no forman parte del programa)
+.playwright-mcp/
