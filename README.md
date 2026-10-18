@@ -56,7 +56,7 @@ Para detener la aplicación, pulsa `Ctrl+C` en la terminal. Los proyectos no des
 2. En **Fuentes y documentos**, carga las referencias, el formato institucional y las lecturas disponibles. Comprueba el estado de extracción y completa autor/año/URL cuando los hayas verificado.
 3. En **OpenCode y agentes**, prepara los archivos del proyecto. La ruta aparece en pantalla y normalmente será `workspace/projects/<ID>`.
 4. Desde la raíz de esta aplicación, ejecuta `opencode` para que reconozca `opencode.json`, `.opencode/agents/` y `.opencode/skills/`.
-5. Pídele al coordinador que lea `workspace/projects/<ID>/PROMPT_OPENCODE.md` y `BRIEF.md`. El flujo está diseñado para generar primero el plan y la matriz de fuentes; luego el borrador; después las auditorías.
+5. Pídele al coordinador que lea `.opencode/INSTRUCCIONES_GENERALES.md`, `workspace/projects/<ID>/PROMPT_OPENCODE.md` y `BRIEF.md`. El flujo está diseñado para generar primero el plan y la matriz de fuentes; luego el borrador; después las auditorías.
 6. Los productos de los agentes deben guardarse en `workspace/projects/<ID>/`. El archivo esperado para importar al editor es `BORRADOR.md`.
 7. En **Borrador y exportación**, pulsa **Importar de OpenCode**, revisa y edita el contenido, y guarda. Añade instrucciones en el apartado de correcciones para preparar `SOLICITUD_REVISION.md`; luego pídele a OpenCode que la ejecute.
 8. Exporta a Word cuando esté listo. Vuelve a verificar citas, referencias, tablas, figuras, títulos, paginación, portada y la guía de la institución.
@@ -64,7 +64,7 @@ Para detener la aplicación, pulsa `Ctrl+C` en la terminal. Los proyectos no des
 Prompt inicial sugerido:
 
 ```text
-Lee .opencode/INSTRUCCIONES_GENERALES.md y workspace/projects/<ID>/PROMPT_OPENCODE.md. Usa el agente coordinador-investigacion y los agentes especializados. Empieza por el plan y la matriz de fuentes. No inventes datos bibliográficos ni afirmes que una fuente fue verificada si no pudiste abrirla. Guarda BORRADOR.md, los informes de auditoría y los pendientes dentro de la carpeta del proyecto.
+Lee .opencode/INSTRUCCIONES_GENERALES.md, workspace/projects/<ID>/PROMPT_OPENCODE.md y BRIEF.md. Usa el agente coordinador-investigacion y los agentes especializados. Empieza por el plan y la matriz de fuentes. No inventes datos bibliográficos, citas ni resultados, ni afirmes que una fuente fue verificada si no pudiste abrirla; marca lo no verificable como pendiente. Guarda todos los productos (BORRADOR.md, INFORME_REVISION.md y PENDIENTES_DE_VERIFICACION.md) dentro de la carpeta del proyecto para que la app pueda importarlos.
 ```
 
 ## Playwright MCP

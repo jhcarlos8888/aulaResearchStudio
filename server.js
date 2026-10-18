@@ -722,7 +722,7 @@ app.post('/api/projects/:id/prepare', requireProject, async (req, res) => {
     path: `workspace/projects/${req.project.id}`,
     absolutePath: dir,
     files: files.sort(),
-    startPrompt: `Lee workspace/projects/${req.project.id}/PROMPT_OPENCODE.md y BRIEF.md. Usa el agente coordinador-investigacion y los agentes especializados. Empieza por el plan y la matriz de fuentes, y no inventes citas ni resultados.`
+    startPrompt: `Lee .opencode/INSTRUCCIONES_GENERALES.md, workspace/projects/${req.project.id}/PROMPT_OPENCODE.md y BRIEF.md. Usa el agente coordinador-investigacion y los agentes especializados. Empieza por el plan y la matriz de fuentes. No inventes datos bibliográficos, citas ni resultados, ni afirmes que una fuente fue verificada si no pudiste abrirla; marca lo no verificable como pendiente. Guarda todos los productos (BORRADOR.md, INFORME_REVISION.md y PENDIENTES_DE_VERIFICACION.md) dentro de la carpeta del proyecto para que la app pueda importarlos.`
   });
 });
 
