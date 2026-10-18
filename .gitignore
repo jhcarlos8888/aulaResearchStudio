@@ -3,6 +3,8 @@ node_modules/
 .DS_Store
 *.log
 data/projects.json.bak
+# Base de datos local de la app (contiene datos personales y borradores; no se versiona)
+data/projects.json
 workspace/exports/*
 !workspace/exports/.gitkeep
 workspace/projects/*
