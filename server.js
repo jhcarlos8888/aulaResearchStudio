@@ -6,7 +6,7 @@ const path = require('node:path');
 const fs = require('node:fs/promises');
 const fsSync = require('node:fs');
 const crypto = require('node:crypto');
-const { spawnSync } = require('node:child_process');
+const { detectOpenCodeCli } = require('./lib/opencode-detection');
 const pdfParse = require('pdf-parse');
 const { extractRawText } = require('./lib/docx-text');
 const { createWordDocument } = require('./lib/docx-export');
@@ -446,13 +446,8 @@ async function requireProject(req, res, next) {
 let opencodeCache = { checkedAt: 0, available: false, version: null };
 async function detectOpencode() {
   if (Date.now() - opencodeCache.checkedAt < 60_000) return opencodeCache;
-  const opencode = spawnSync('opencode', ['--version'], { encoding: 'utf8', timeout: 2500 });
-  const available = !opencode.error && opencode.status === 0;
-  opencodeCache = {
-    checkedAt: Date.now(),
-    available,
-    version: available ? ((opencode.stdout || opencode.stderr || '').trim().split('\n')[0] || null) : null
-  };
+  const detected = detectOpenCodeCli();
+  opencodeCache = { checkedAt: Date.now(), ...detected };
   return opencodeCache;
 }
 

@@ -8,9 +8,12 @@
     "start": "node server.js",
     "dev": "node --watch server.js",
     "check": "node --check server.js && node --check lib/docx-export.js && node --check lib/docx-text.js && node --check public/app.js",
-    "smoke": "bash scripts/smoke-test.sh"
+    "smoke": "bash scripts/smoke-test.sh",
+    "test:unit": "node --test test/*.test.js"
   },
-  "engines": { "node": ">=20.0.0" },
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "dependencies": {
     "docx": "^9.12.0",
     "express": "^5.1.0",

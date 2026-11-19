@@ -48,7 +48,33 @@ npm start
 
 La aplicación usa el puerto `4173` por defecto. Para cambiarlo, copia `.env.example` a `.env` y define `PORT` (y opcionalmente `HOST`), o exporta las variables en la terminal antes de arrancar: `PORT=5000 ./scripts/start.sh`.
 
-Para detener la aplicación, pulsa `Ctrl+C` en la terminal. Los proyectos no desaparecen al cerrar el servidor.
+Para detener la aplicación iniciada desde una terminal, pulsa `Ctrl+C`. Los proyectos no desaparecen al cerrar el servidor.
+
+### Mantener el servidor activo después de las rondas de OpenCode (Linux)
+
+El comando `npm start` ejecutado desde una herramienta de un agente puede detenerse cuando termina su sesión. Para mantener Aula disponible de forma independiente, instálala como servicio de usuario **sin sudo**:
+
+```bash
+./scripts/install-user-service.sh
+systemctl --user status aula-research-studio.service
+```
+
+La unidad utiliza el Node.js detectado durante la instalación, vincula el servidor solo a `127.0.0.1:4173` y proporciona al proceso la ubicación de OpenCode mediante `OPENCODE_BIN`. Para iniciar, reiniciar o detener:
+
+```bash
+systemctl --user start aula-research-studio.service
+systemctl --user restart aula-research-studio.service
+systemctl --user stop aula-research-studio.service
+journalctl --user -u aula-research-studio.service -n 40 --no-pager
+```
+
+No ejecutes simultáneamente otro `npm start` en el puerto 4173. Esta unidad permanece viva cuando termina la ronda de la fábrica; para mantenerla también al cerrar la sesión Linux se requiere que el administrador habilite la persistencia del gestor de usuario (linger). La disponibilidad de OpenCode en `/api/health` prueba que el ejecutable responde a `--version`, no que todos los modelos o agentes hayan completado una tarea real. En cualquier plataforma puedes especificar un ejecutable alternativo con la variable `OPENCODE_BIN`.
+
+Para ejecutar las pruebas unitarias de detección:
+
+```bash
+npm run test:unit
+```
 
 ## Flujo recomendado con OpenCode
 
