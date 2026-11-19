@@ -284,7 +284,7 @@ async function refreshEnvironmentStatus() {
     const result = await api('/api/health');
     const items = [
       { label: `Node.js ${result.node}`, detail: 'Runtime de la aplicación', ok: true },
-      { label: result.opencodeAvailable ? `OpenCode disponible (${result.opencodeVersion})` : 'OpenCode no detectado en PATH', detail: result.opencodeAvailable ? 'Puedes iniciar el flujo de agentes desde la terminal.' : 'Instálalo o asegúrate de que el comando opencode esté en PATH.', ok: result.opencodeAvailable },
+      { label: result.opencodeAvailable ? `OpenCode disponible (${result.opencodeVersion || 'versión desconocida'})` : 'OpenCode no detectado', detail: result.opencodeAvailable ? 'Puedes iniciar el flujo de agentes desde la terminal.' : 'Instálalo o configura OPENCODE_BIN para que el servidor lo detecte.', ok: result.opencodeAvailable },
       { label: result.mcpConfig ? 'Configuración Playwright MCP presente' : 'Configuración Playwright MCP no encontrada', detail: 'Configuración local en opencode.json.', ok: result.mcpConfig },
       { label: 'Almacenamiento local activo', detail: `Referencias de hasta ${result.uploadLimitMB} MB por archivo.`, ok: true }
     ];

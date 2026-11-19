@@ -70,11 +70,28 @@ journalctl --user -u aula-research-studio.service -n 40 --no-pager
 
 No ejecutes simultáneamente otro `npm start` en el puerto 4173. Esta unidad permanece viva cuando termina la ronda de la fábrica; para mantenerla también al cerrar la sesión Linux se requiere que el administrador habilite la persistencia del gestor de usuario (linger). La disponibilidad de OpenCode en `/api/health` prueba que el ejecutable responde a `--version`, no que todos los modelos o agentes hayan completado una tarea real. En cualquier plataforma puedes especificar un ejecutable alternativo con la variable `OPENCODE_BIN`.
 
+**Importante para agentes y terminales no interactivas:** `OPENCODE_BIN` sirve para la detección desde el servicio, pero no convierte automáticamente `opencode` en un comando del shell. Si OpenCode está instalado en `$HOME/.opencode/bin/opencode`, usa esa ruta absoluta o añade su directorio al proceso que lo necesita:
+
+```bash
+export PATH="$HOME/.opencode/bin:$PATH"
+opencode --version
+opencode run --agent coordinador-investigacion "Propón dos pasos de investigación, sin modificar archivos."
+```
+
+No hace falta leer el entorno de otros procesos, inspeccionar secretos ni reinstalar OpenCode para localizar el ejecutable. Si se deniega un permiso, utiliza una alternativa segura o declara el bloqueo sin volver a solicitar el mismo acceso.
+
+
 Para ejecutar las pruebas unitarias de detección:
 
 ```bash
 npm run test:unit
 ```
+
+## Reparto de modelos de los agentes académicos
+
+Los seis agentes de `.opencode/agents/` están configurados con dos modelos del proveedor `opencode-go`, según la función de cada rol. **GLM-5.3-Flash** se emplea en coordinación y generación: `coordinador-investigacion` (temperatura 0.2), `investigador-fuentes` (0.1) y `redactor-academico` (0.3). **DeepSeek-V4.1-Flash** se emplea en comprobación crítica: `auditor-fuentes` (0.1), `revisor-apa` (0.1) y `editor-critico` (0.2). El modelo global es `opencode-go/glm-5.3-flash` y el agente predeterminado es `coordinador-investigacion`. Esta división busca separar la producción inicial de la verificación independiente; las temperaturas están fijadas explícitamente en los perfiles de agente.
+
+**Tres verificaciones distintas:** una declaración `model:` en los archivos solo demuestra que el agente está **configurado**; encontrar ese modelo activo en el catálogo solo demuestra **disponibilidad anunciada**; y únicamente una invocación real del agente nombrado que termine con una respuesta y registros verificables demuestra **inferencia funcional**. La disponibilidad en `/api/health` verifica que el ejecutable OpenCode responde a `--version`, no la funcionalidad de sus modelos o agentes.
 
 ## Flujo recomendado con OpenCode
 

@@ -70,10 +70,20 @@ for _ in $(seq 1 25); do
   curl -s --max-time 2 "$BASE/api/health" > /dev/null 2>&1 && break
   sleep 0.2
 done
-if curl -s --max-time 2 "$BASE/api/health" | grep -q '"ok":true'; then
-  check "el servidor arranca y responde en /api/health" 0
+HEALTH_JSON="$(curl -s --max-time 2 "$BASE/api/health" || true)"
+if printf '%s' "$HEALTH_JSON" | node -e '
+  const fs = require("node:fs");
+  const { isValidHealthResponse } = require("./lib/health-contract");
+  try {
+    const payload = JSON.parse(fs.readFileSync(0, "utf8"));
+    process.exit(isValidHealthResponse(payload) ? 0 : 1);
+  } catch {
+    process.exit(1);
+  }
+'; then
+  check "el servidor responde en /api/health con ok y contrato OpenCode coherente" 0
 else
-  check "el servidor arranca y responde en /api/health" 1
+  check "el servidor responde en /api/health con ok y contrato OpenCode coherente" 1
   echo "  Log del servidor:"; sed 's/^/    /' "$TMP/server.log"
   echo; echo "Resultado: $PASS PASS / $FAIL FAIL"; exit 1
 fi

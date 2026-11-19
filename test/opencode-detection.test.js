@@ -52,3 +52,12 @@ test('does not run shell commands for executable discovery', () => {
   };
   assert.equal(detectOpenCodeCli({ env: { OPENCODE_BIN: '/safe/bin/opencode' }, run }).available, true);
 });
+
+
+test('successful CLI with blank output is available with unknown version', () => {
+  const detected = detectOpenCodeCli({
+    env: { OPENCODE_BIN: '/custom/bin/opencode' },
+    run: () => ({ status: 0, stdout: '', stderr: '' })
+  });
+  assert.deepEqual(detected, { available: true, version: null });
+});
