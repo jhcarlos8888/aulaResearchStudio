@@ -59,7 +59,10 @@ Environment=NODE_ENV=production
 Environment=HOST=127.0.0.1
 Environment=PORT=4173
 Environment="OPENCODE_BIN=$OPENCODE_BIN"
-Restart=on-failure
+# El servicio debe recuperarse de señales de agentes que matan el proceso
+# por error, incluso si systemd interpreta SIGTERM como salida limpia.
+# systemctl --user stop sigue respetando una parada humana explícita.
+Restart=always
 RestartSec=3
 
 [Install]

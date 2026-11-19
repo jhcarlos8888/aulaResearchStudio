@@ -199,3 +199,13 @@ La batería de humo (`scripts/smoke-test.sh`) arranca un servidor temporal en el
 - Microsoft Playwright MCP: <https://github.com/microsoft/playwright-mcp>
 - Generación de Word con `docx`: <https://www.npmjs.com/package/docx>
 \n**Evidencia de inferencia:** [auditoría de los seis agentes académicos, 19-11-2026](docs/auditoria-agentes-2026-11-19.md).\n
+
+## Servicio local y resiliencia
+
+`scripts/install-user-service.sh` configura `aula-research-studio.service`
+con `Restart=always`, de manera que systemd intente recuperar el proceso si
+un agente lo termina por accidente. Una orden explícita
+`systemctl --user stop aula-research-studio.service` sigue deteniéndolo.
+**Esto no reemplaza** la protección del Auditor de la fábrica: cada agente
+debe usar servidores de prueba con puerto y PID propios y nunca cerrar
+procesos ajenos mediante `pkill` ni por el mero hecho de escuchar en 4173.
