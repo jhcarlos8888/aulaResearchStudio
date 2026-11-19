@@ -1,7 +1,7 @@
 ---
 description: Comprueba la consistencia de citas, referencias y requisitos de formato de APA o del estilo indicado.
 mode: subagent
-model: opencode-go/mimo-v2.6-flash
+model: opencode-go/deepseek-v4.1-flash
 request:
   body:
     temperature: 0.1

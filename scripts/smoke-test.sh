@@ -237,6 +237,72 @@ else
   check "la imagen valida NO genera ningun aviso (falso positivo)" 0
 fi
 
+echo "== Exportar Word: imagenes fuera del proyecto (confinamiento) =="
+# Un PNG válido copiado FUERA de la carpeta del proyecto no debe incrustarse,
+# ni por ruta absoluta ni escalando con `../`. La exportación debe responder
+# HTTP 200 con un aviso visible; nunca leer fuera del proyecto ni romperse.
+cp "$SMOKE_WORKSPACE/projects/$ID/imagenes/figura.png" "$SMOKE_WORKSPACE/fuera.png"
+if [[ -f "$SMOKE_WORKSPACE/fuera.png" ]]; then
+  check "el fichero externo de prueba existe" 0
+else
+  check "el fichero externo de prueba existe" 1
+fi
+JSONX="$(python3 -c 'import json,sys
+draft = "Absoluta.\n\n![Figura A](" + sys.argv[1] + ")\n\nRelativa.\n\n![Figura B](../../fuera.png)\n"
+print(json.dumps({"draftText": draft}))' "$SMOKE_WORKSPACE/fuera.png")"
+DOCXX="$(curl -s --max-time 30 -X POST "$BASE/api/projects/$ID/export" -H 'Content-Type: application/json' --data-binary "$JSONX" \
+  | python3 -c 'import sys,json;print(json.load(sys.stdin).get("filename",""))' 2>/dev/null)"
+if [[ -n "$DOCXX" && "$DOCXX" == *.docx ]]; then
+  check "una imagen fuera del proyecto no tumba la exportacion (sin HTTP 500)" 0
+else
+  check "una imagen fuera del proyecto no tumba la exportacion (sin HTTP 500)" 1
+fi
+MEDIAX="$(unzip -l "$SMOKE_WORKSPACE/exports/$DOCXX" 2>/dev/null | grep -c 'word/media/.*\.' || true)"
+if [[ "$MEDIAX" == "0" ]]; then
+  check "la imagen externa NO se incrusta (media: ${MEDIAX:-0})" 0
+else
+  check "la imagen externa NO se incrusta (media: ${MEDIAX:-0}, esperado 0)" 1
+fi
+XMLX="$(unzip -p "$SMOKE_WORKSPACE/exports/$DOCXX" word/document.xml 2>/dev/null)"
+AVISOSX="$(echo "$XMLX" | grep -o '\[Imagen fuera del proyecto' | wc -l | tr -d ' ')"
+if [[ "$AVISOSX" == "2" ]]; then
+  check "ruta absoluta y ../ quedan como aviso visible (avisos: $AVISOSX)" 0
+else
+  check "ruta absoluta y ../ quedan como aviso visible (avisos: ${AVISOSX:-0}, esperado 2)" 1
+fi
+
+echo "== Exportar Word: enlace simbolico a fichero externo (capa realpath) =="
+# Un enlace dentro de imagenes/ que apunta a un fichero externo pasa la
+# comprobacion de path.relative pero debe ser rechazado por la capa realpath.
+# Si ln -s no esta disponible en el entorno, el bloque se marca SKIP.
+if ln -s "$SMOKE_WORKSPACE/fuera.png" "$SMOKE_WORKSPACE/projects/$ID/imagenes/enlace.png" 2>/dev/null; then
+  JSONL="$(python3 -c 'import json
+draft = "Enlace.\n\n![Figura C](imagenes/enlace.png)\n"
+print(json.dumps({"draftText": draft}))')"
+  DOCXL="$(curl -s --max-time 30 -X POST "$BASE/api/projects/$ID/export" -H 'Content-Type: application/json' --data-binary "$JSONL" \
+    | python3 -c 'import sys,json;print(json.load(sys.stdin).get("filename",""))' 2>/dev/null)"
+  if [[ -n "$DOCXL" && "$DOCXL" == *.docx ]]; then
+    check "un enlace simbolico externo no tumba la exportacion (sin HTTP 500)" 0
+  else
+    check "un enlace simbolico externo no tumba la exportacion (sin HTTP 500)" 1
+  fi
+  MEDIAL="$(unzip -l "$SMOKE_WORKSPACE/exports/$DOCXL" 2>/dev/null | grep -c 'word/media/.*\.' || true)"
+  if [[ "$MEDIAL" == "0" ]]; then
+    check "el contenido del enlace simbolico NO se incrusta (media: $MEDIAL)" 0
+  else
+    check "el contenido del enlace simbolico NO se incrusta (media: $MEDIAL, esperado 0)" 1
+  fi
+  XMLL="$(unzip -p "$SMOKE_WORKSPACE/exports/$DOCXL" word/document.xml 2>/dev/null)"
+  AVISOSL="$(echo "$XMLL" | grep -o '\[Imagen fuera del proyecto' | wc -l | tr -d ' ')"
+  if [[ "$AVISOSL" == "1" ]]; then
+    check "el enlace simbolico queda como aviso visible (avisos: $AVISOSL)" 0
+  else
+    check "el enlace simbolico queda como aviso visible (avisos: ${AVISOSL:-0}, esperado 1)" 1
+  fi
+else
+  echo "SKIP: ln -s no disponible; prueba de enlace simbolico omitida"
+fi
+
 echo "== Subir un .docx como referencia y extraer su texto =="
 DOCX_REF="$(curl -s --max-time 30 -X POST "$BASE/api/projects/$ID/references" \
   -F "file=@$SMOKE_WORKSPACE/exports/$DOCX_NAME" -F "title=Documento exportado" \

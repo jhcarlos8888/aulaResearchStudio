@@ -1,7 +1,7 @@
 ---
 description: Investiga en la web y en los documentos aportados, y crea una matriz de fuentes verificables.
 mode: subagent
-model: opencode-go/mimo-v2.6-flash
+model: opencode-go/glm-5.3-flash
 request:
   body:
     temperature: 0.1

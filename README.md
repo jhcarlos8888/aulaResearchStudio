@@ -10,7 +10,7 @@ Aplicación local en español para planificar trabajos escritos, organizar refer
 - **Biblioteca de referencias por proyecto**: carga PDF, DOCX, TXT, Markdown, CSV o HTML; guarda el original, registra metadatos y extrae texto de formatos compatibles para que los agentes puedan consultarlo. Un PDF escaneado puede requerir OCR.
 - **Paquete OpenCode**: crea `BRIEF.md`, `FUENTES.md`, `PROMPT_OPENCODE.md`, `PLAN_INVESTIGACION.md` y una bitácora en la carpeta del proyecto.
 - **Seis agentes**: coordinación, investigación de fuentes, redacción académica, auditoría de referencias, revisión de APA y edición crítica.
-- **Siete skills reutilizables** para planificación, investigación, escritura, APA, gestión de referencias, revisión crítica e integridad académica.
+- **Ocho skills reutilizables** para planificación, investigación de fuentes, escritura académica, artículos de revisión, APA, gestión de referencias, revisión crítica e integridad académica.
 - **Borrador editable**: guarda texto, importa un `BORRADOR.md` generado por OpenCode y prepara instrucciones de corrección sucesivas.
 - **Exportación Word** con portada que utiliza los datos institucionales, Times New Roman 12, interlineado doble y márgenes de 2,54 cm como base. Incrusta las figuras citadas en el borrador (`![](imagenes/figura.png)`), escaladas sin deformar y nunca por encima de su resolución original. Se pueden adjuntar al final entradas preliminares construidas con los metadatos de las fuentes cargadas.
 - **Configuración de Playwright MCP** para que OpenCode pueda operar un navegador al investigar en sitios web.
@@ -102,6 +102,8 @@ Playwright ya viene configurado. Para búsquedas estructuradas con una API puede
 - `data/projects.json`: metadatos, referencias registradas y borradores guardados en la app.
 - `workspace/projects/<ID>/referencias/`: archivos originales aportados.
 - `workspace/projects/<ID>/referencias_texto/`: texto extraído automáticamente para lectura por agentes.
+- `workspace/projects/<ID>/entregables/`: espejo del borrador mantenido por la app (`BORRADOR_EDITABLE.md`, actualizado al guardar e importar).
+- `workspace/projects/<ID>/imagenes/`: convención para las figuras del borrador; las rutas de imagen se resuelven contra la carpeta del proyecto y **solo se incrustan rutas relativas que queden dentro de esa carpeta**: cualquier ruta absoluta se rechaza con un aviso visible.
 - `workspace/projects/<ID>/`: brief, instrucciones, plan, matriz, borrador e informes.
 - `workspace/exports/`: archivos Word generados.
 
@@ -116,7 +118,7 @@ Para eliminar un trabajo por completo (registro, referencias, borrador y exporta
 - La app no envía los documentos a un proveedor de IA por sí sola. Cuando se los pides a OpenCode y el modelo/proveedor requiere servicio remoto, el contenido necesario puede procesarse fuera de tu equipo. No compartas datos sensibles sin autorización.
 - Los documentos web y cargados se tratan como datos no confiables. Las instrucciones de los agentes piden ignorar texto malicioso incrustado en fuentes.
 - No hay verificación bibliográfica automática infalible. Los metadatos de un archivo pueden ser incompletos y las entradas preliminares de bibliografía están marcadas para su revisión.
-- Las dependencias pasan `npm audit` con **0 vulnerabilidades**. La extracción de texto de `.docx` se hace con un módulo propio (`lib/docx-text.js`, ZIP + XML con `node:zlib`) sin dependencias externas; `.pdf` usa `pdf-parse`.
+- Las dependencias pasan `npm audit` con **0 vulnerabilidades conocidas** (verificado en noviembre de 2026; se aplicó `npm audit fix` para resolver los avisos altos de `body-parser` y `multer`). El estado puede cambiar con el tiempo: vuelve a ejecutar `npm audit` tras actualizar dependencias. La extracción de texto de `.docx` se hace con un módulo propio (`lib/docx-text.js`, ZIP + XML con `node:zlib`) sin dependencias externas; `.pdf` usa `pdf-parse`.
 
 ## Notas sobre `FUENTES.md`
 
@@ -144,7 +146,7 @@ npm run check   # sintaxis de JavaScript
 npm run smoke   # batería de humo: arranca el servidor y prueba el flujo real
 ```
 
-La batería de humo (`scripts/smoke-test.sh`) arranca un servidor temporal en el puerto 4399 con **un directorio de datos propio y aislado**: crea un proyecto de prueba, comprueba las plantillas iniciales y la conservación de `FUENTES.md`, sube referencias en paralelo, guarda un borrador gigante, exporta a Word (sangría francesa y encabezados APA), comprueba la **exportación de figuras** (una imagen válida incrustada una sola vez y sin deformar; un formato no admitido, un fichero corrupto y uno inexistente quedan como aviso visible sin tumbar la exportación), sube un `.docx` y extrae su texto, comprueba la protección contra `data/projects.json` corrupto y elimina el proyecto. **No toca tus proyectos reales** (aunque la aplicación esté abierta) y borra sus datos al terminar. Requiere `node`, `python3`, `unzip` y `curl`. `npm run check` solo revisa sintaxis; no sustituye la revisión manual del Word ni de la guía institucional.
+La batería de humo (`scripts/smoke-test.sh`) arranca un servidor temporal en el puerto 4399 con **un directorio de datos propio y aislado**: crea un proyecto de prueba, comprueba las plantillas iniciales y la conservación de `FUENTES.md`, sube referencias en paralelo, guarda un borrador gigante, exporta a Word (sangría francesa y encabezados APA), comprueba la **exportación de figuras** (una imagen válida incrustada una sola vez y sin deformar; un formato no admitido, un fichero corrupto y uno inexistente quedan como aviso visible sin tumbar la exportación), verifica el **confinamiento de imágenes** (una ruta absoluta y otra con `../` fuera de la carpeta del proyecto quedan como aviso visible, sin incrustar nada ni tumbar la exportación), sube un `.docx` y extrae su texto, comprueba la protección contra `data/projects.json` corrupto y elimina el proyecto. **No toca tus proyectos reales** (aunque la aplicación esté abierta) y borra sus datos al terminar. Requiere `node`, `python3`, `unzip` y `curl`. `npm run check` solo revisa sintaxis; no sustituye la revisión manual del Word ni de la guía institucional.
 
 ## Referencias oficiales de la integración
 

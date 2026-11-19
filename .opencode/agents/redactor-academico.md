@@ -1,7 +1,7 @@
 ---
 description: Convierte un plan y una matriz de evidencia en un borrador académico coherente y editable.
 mode: subagent
-model: opencode-go/mimo-v2.6-flash
+model: opencode-go/glm-5.3-flash
 request:
   body:
     temperature: 0.3

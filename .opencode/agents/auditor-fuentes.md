@@ -1,7 +1,7 @@
 ---
 description: Audita la trazabilidad de las afirmaciones, las citas y las referencias sin reescribir silenciosamente el contenido.
 mode: subagent
-model: opencode-go/mimo-v2.6-flash
+model: opencode-go/deepseek-v4.1-flash
 request:
   body:
     temperature: 0.1

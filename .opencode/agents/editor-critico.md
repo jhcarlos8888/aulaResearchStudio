@@ -1,7 +1,7 @@
 ---
 description: Realiza una revisión de fondo, lógica y estilo y propone correcciones rastreables.
 mode: subagent
-model: opencode-go/mimo-v2.6-flash
+model: opencode-go/deepseek-v4.1-flash
 request:
   body:
     temperature: 0.2
