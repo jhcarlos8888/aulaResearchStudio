@@ -198,3 +198,4 @@ La batería de humo (`scripts/smoke-test.sh`) arranca un servidor temporal en el
 - OpenCode — servidores MCP: <https://opencode.ai/v2/docs/mcp-servers>
 - Microsoft Playwright MCP: <https://github.com/microsoft/playwright-mcp>
 - Generación de Word con `docx`: <https://www.npmjs.com/package/docx>
+\n**Evidencia de inferencia:** [auditoría de los seis agentes académicos, 19-11-2026](docs/auditoria-agentes-2026-11-19.md).\n
